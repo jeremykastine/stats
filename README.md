@@ -1,3 +1,5 @@
+> **Moved to Teaching.** The active course materials are now in [teaching/stats](https://github.com/jeremykastine/teaching/tree/main/stats). Open the [course website](https://jeremykastine.github.io/teaching/stats/). Make future updates in Teaching; this repository is retained for its original history.
+
 # Statistics class slides
 
 Open `index.html` for section links to the Chapter 1 PDF slides for OpenStax *Introductory Statistics 2e*.
