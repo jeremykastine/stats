@@ -14,7 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 FONT_DIR = Path('/usr/share/fonts/truetype/dejavu')
 for name, filename in [('Sans','DejaVuSans.ttf'),('Bold','DejaVuSans-Bold.ttf')]:
     pdfmetrics.registerFont(TTFont(name, str(FONT_DIR/filename)))
-W,H = 960,540
+W,H = 612,792  # US Letter portrait; keep the lower page clear for annotations.
+MARGIN = 48
+CONTENT_WIDTH = W - 2 * MARGIN
 INK = HexColor('#14232d')
 ACCENT = HexColor('#185f72')
 MUTED = HexColor('#52616b')
@@ -42,21 +44,21 @@ for section in sections:
     for i, slide in enumerate(section['slides'],1):
         assert '?' in slide['question']
         c.setFillColor(ACCENT)
-        c.rect(48,491,42,4,fill=1,stroke=0)
+        c.rect(MARGIN,H-49,42,4,fill=1,stroke=0)
         c.setFont('Sans',11)
         c.setFillColor(MUTED)
-        c.drawRightString(912,490,f'{number}  /  {i} of {len(section["slides"])}')
-        top=paragraph(c,slide['title'],48,470,864,30,'Bold')-19
-        body_size=23 if '\\n' in slide['body'] else 26
-        top=paragraph(c,slide['body'],48,top,864,body_size)-23
-        bottom=paragraph(c,slide['question'],48,top,864,28,'Bold',ACCENT)
+        c.drawRightString(W-MARGIN,H-50,f'{number}  /  {i} of {len(section["slides"])}')
+        top=paragraph(c,slide['title'],MARGIN,H-70,CONTENT_WIDTH,24,'Bold')-17
+        body_size=20 if '\\n' in slide['body'] else 22
+        top=paragraph(c,slide['body'],MARGIN,top,CONTENT_WIDTH,body_size)-21
+        bottom=paragraph(c,slide['question'],MARGIN,top,CONTENT_WIDTH,22,'Bold',ACCENT)
         # Keep a clear writing area beneath the prompt, even on the roster page.
-        assert bottom>=145,(number,i,bottom)
+        assert bottom>=H/2,(number,i,bottom)
         c.setFillColor(MUTED)
-        c.setFont('Sans',7)
-        c.drawString(48,25,'Aligned to OpenStax Introductory Statistics 2e, Barbara Illowsky and Susan Dean. Prompts adapted for class discussion. CC BY-NC-SA 4.0.')
+        c.setFont('Sans',6.5)
+        paragraph(c,'Aligned to OpenStax Introductory Statistics 2e, Barbara Illowsky and Susan Dean. Classroom adaptations. CC BY-NC-SA 4.0.',MARGIN,32,CONTENT_WIDTH,6.5,color=MUTED)
         c.drawString(48,14,'Access for free at '+BOOK)
-        c.linkURL(BASE+section['slug'],(48,12,650,33),relative=0)
+        c.linkURL(BASE+section['slug'],(MARGIN,12,W-MARGIN,33),relative=0)
         c.showPage()
     c.save()
     cards.append(f'''<li><span class="section">Section {number}</span>

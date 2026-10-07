@@ -2,7 +2,7 @@
 
 Open `index.html` for section links to the Chapter 1 PDF slides for OpenStax *Introductory Statistics 2e*.
 
-The six PDFs contain 106 discussion slides. Each page presents one definition, concept, or problem with a question and blank room for pen annotations. Solutions are intentionally omitted.
+The six PDFs contain 106 discussion slides. Pages use US Letter portrait orientation with the lower half clear for pen annotations. Each page presents one definition, concept, or problem with a question and blank room for pen annotations. Solutions are intentionally omitted.
 
 ## Editing and rebuilding
 
